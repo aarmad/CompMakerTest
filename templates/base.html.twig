@@ -1,28 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Symphony_Comp{% endblock %}</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Symphony_Comp - Chocolats Artisanaux{% endblock %}</title>
+    
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Découvrez nos délicieux chocolats artisanaux faits avec passion et les meilleurs ingrédients.">
+    
+    {% block stylesheets %}{% endblock %}
 </head>
 <body>
-<nav>
-    <a href="{{ path('home') }}">Accueil</a>
-    <a href="{{ path('app_chocolate_index') }}">Chocolats</a>
-    <a href="{{ path('about') }}">Qui sommes-nous ?</a>
-    <a href="{{ path('contact') }}">Contact</a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="{{ path('home') }}" class="logo">
+                    <span class="logo-icon">🍫</span>
+                    <span>Symphony_Comp</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="{{ path('home') }}" {% if app.request.attributes.get('_route') == 'home' %}class="active"{% endif %}>Accueil</a></li>
+                    <li><a href="{{ path('app_chocolate_index') }}" {% if 'chocolate' in app.request.attributes.get('_route') %}class="active"{% endif %}>Chocolats</a></li>
+                    <li><a href="{{ path('about') }}" {% if app.request.attributes.get('_route') == 'about' %}class="active"{% endif %}>Qui sommes-nous ?</a></li>
+                    <li><a href="{{ path('contact') }}" {% if app.request.attributes.get('_route') == 'contact' %}class="active"{% endif %}>Contact</a></li>
+                    
+                    {% if app.user %}
+                        <div class="user-menu">
+                            <span>Bonjour, {{ app.user.email }}</span>
+                            <a href="{{ path('app_profile') }}" class="btn btn-secondary btn-small">Profil</a>
+                            <a href="{{ path('app_logout') }}" class="btn btn-danger btn-small">Déconnexion</a>
+                        </div>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}" class="btn btn-primary btn-small">Connexion</a></li>
+                        <li><a href="{{ path('app_register') }}" class="btn btn-secondary btn-small">Créer un compte</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    {% if app.user %}
-        <a href="{{ path('app_profile') }}">Profil</a>
-        <a href="{{ path('app_logout') }}">Déconnexion</a>
-    {% else %}
-        <a href="{{ path('app_login') }}">Connexion</a>
-        <a href="{{ path('app_register') }}">Créer un compte</a>
-    {% endif %}
-</nav>
+    <!-- Flash Messages -->
+    {% for message in app.flashes('success') %}
+        <div class="flash-messages">
+            <div class="flash-message flash-success">
+                <span>Bien !</span>
+                <span>{{ message }}</span>
+            </div>
+        </div>
+    {% endfor %}
+    
+    {% for message in app.flashes('error') %}
+        <div class="flash-messages">
+            <div class="flash-message flash-error">
+                <span>Nahh !</span>
+                <span>{{ message }}</span>
+            </div>
+        </div>
+    {% endfor %}
 
-<main>
-    {% block body %}{% endblock %}
-</main>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Symphony_Comp</h3>
+                    <p>Chocolats artisanaux faits avec passion depuis 2024. Qualité, goût et satisfaction garantis.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="{{ path('home') }}">Accueil</a></li>
+                        <li><a href="{{ path('app_chocolate_index') }}">Nos chocolats</a></li>
+                        <li><a href="{{ path('about') }}">À propos</a></li>
+                        <li><a href="{{ path('contact') }}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Légal</h3>
+                    <ul>
+                        <li><a href="{{ path('mentions') }}">Mentions légales</a></li>
+                        <li><a href="{{ path('cgu') }}">CGU</a></li>
+                        <li><a href="{{ path('confidentialite') }}">Confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Mail : contact@symphonycomp.fr</li>
+                        <li>Téléphone : 01 23 45 67 89</li>
+                        <li>Addresse : 123 Rue du Chocolat, Paris</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; {{ "now"|date("Y") }} Symphony_Comp - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block javascripts %}{% endblock %}
 </body>
 </html>

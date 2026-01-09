@@ -80,13 +80,10 @@ final class UserController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function profile(): Response
     {
-        // Vérifie qu'un utilisateur est connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // Récupère l'utilisateur connecté
         $user = $this->getUser();
         
-        // Si aucun utilisateur n'est connecté, redirige vers login
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
@@ -96,32 +93,4 @@ final class UserController extends AbstractController
         ]);
     }
 
-    // Dans un contrôleur existant ou crée TestController.php
-    #[Route('/check-user', name: 'app_check_user')]
-    public function checkUser(EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = $em->getRepository(User::class)->findOneBy(['email' => 'a@b.com']);
-        
-        if (!$user) {
-            return new Response('Utilisateur NON TROUVÉ');
-        }
-        
-        // Vérifie le mot de passe
-        $plainPassword = 'a@b.com';
-        $isValid = $passwordHasher->isPasswordValid($user, $plainPassword);
-        
-        return new Response(sprintf(
-            'Utilisateur trouvé:<br>
-            ID: %s<br>
-            Email: %s<br>
-            Mot de passe hashé: %s<br>
-            Le mot de passe "a@b.com" est valide ? %s<br>
-            Longueur du hash: %s',
-            $user->getId(),
-            $user->getEmail(),
-            $user->getPassword(),
-            $isValid ? 'OUI' : 'NON',
-            strlen($user->getPassword())
-        ));
-    }
 }

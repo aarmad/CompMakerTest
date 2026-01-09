@@ -36,7 +36,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         
         return new Passport(
             new UserBadge($email, function($userIdentifier) {
-                // Cette fonction charge l'utilisateur depuis la base
                 return $this->userRepository->findOneBy(['email' => $userIdentifier]);
             }),
             new PasswordCredentials($password),
@@ -45,25 +44,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
-/*
-    public function authenticate(Request $request): Passport
-    {
-        #dump($request->request->all()); // Affiche ce qui est envoyé
-        #die();
-        $email = $request->request->get('_username');
-        $password = $request->request->get('_password');
-        #$request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
-
-        return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
-                new RememberMeBadge(),
-            ]
-        );
-    }
-*/
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {

@@ -20,10 +20,8 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            // Récupération des infos
             $data = $form->getData();
 
-            // Préparation de l'email
             $email = (new Email())
                 ->from($data['email'])
                 ->to('aaron.madjri@efrei.net')
@@ -34,13 +32,10 @@ class ContactController extends AbstractController
                     "Message :\n{$data['message']}"
                 );
 
-            // Envoi
             $mailer->send($email);
 
-            // Message de confirmation
-            $this->addFlash('success', 'Votre message a bien été envoyé ❤️');
+            $this->addFlash('success', 'Votre message a bien été envoyé ');
 
-            // Redirection pour éviter double soumission
             return $this->redirectToRoute('contact');
         }
 
