@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chocolats{% endblock %}
+
+{% block body %}
+<h1>Liste des chocolats</h1>
+<a href="{{ path('app_chocolate_new') }}">Ajouter un chocolat</a>
+<ul>
+    {% for chocolate in chocolates %}
+        <li>
+            <a href="{{ path('app_chocolate_index', {id: chocolate.id}) }}">{{ chocolate.chocolate }}</a> - {{ chocolate.price }}€
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

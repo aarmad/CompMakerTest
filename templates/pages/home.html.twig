@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<h1>Bienvenue sur Symphony_Comp !</h1>
+
+<p>Découvrez nos délicieux chocolats artisanaux et profitez d'une expérience unique.</p>
+
+<section class="hero">
+    <img src="/images/hero-chocolat.jpg" alt="Chocolats artisanaux" style="max-width:100%; height:auto;">
+    <p>Nos chocolats sont faits avec passion et les meilleurs ingrédients.</p>
+    <a href="{{ path('app_chocolate_index') }}" class="btn">Voir les chocolats</a>
+</section>
+
+<section class="about">
+    <h2>Qui sommes-nous ?</h2>
+    <p>Symphony_Comp est une entreprise spécialisée dans la création de chocolats artisanaux.  
+       Nous mettons la qualité, le goût et la satisfaction client au centre de notre métier.</p>
+    <a href="{{ path('about') }}" class="btn">En savoir plus</a>
+</section>
+
+<section class="contact-preview">
+    <h2>Contactez-nous</h2>
+    <p>Une question ? Une suggestion ? N’hésitez pas à nous envoyer un message.</p>
+    <a href="{{ path('contact') }}" class="btn">Nous contacter</a>
+</section>
+{% endblock %}

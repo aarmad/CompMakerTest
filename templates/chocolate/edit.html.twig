@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ chocolate is defined ? 'Modifier' : 'Ajouter' }} un chocolat{% endblock %}
+
+{% block body %}
+<h1>{{ chocolate is defined ? 'Modifier' : 'Ajouter' }} un chocolat</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.chocolate) }}
+    {{ form_row(form.price) }}  
+    <button class="btn">Valider</button>
+{{ form_end(form) }}
+
+<a href="{{ path('app_chocolate_indexchocolate_index') }}">Retour à la liste</a>
+{% endblock %}

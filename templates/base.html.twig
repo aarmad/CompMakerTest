@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Symphony_Comp{% endblock %}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav>
+    <a href="{{ path('home') }}">Accueil</a>
+    <a href="{{ path('app_chocolate_index') }}">Chocolats</a>
+    <a href="{{ path('about') }}">Qui sommes-nous ?</a>
+    <a href="{{ path('contact') }}">Contact</a>
+
+    {% if app.user %}
+        <a href="{{ path('app_profile') }}">Profil</a>
+        <a href="{{ path('app_logout') }}">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('app_login') }}">Connexion</a>
+        <a href="{{ path('app_register') }}">Créer un compte</a>
+    {% endif %}
+</nav>
+
+<main>
+    {% block body %}{% endblock %}
+</main>
+</body>
+</html>

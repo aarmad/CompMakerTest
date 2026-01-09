@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ chocolate.name }}{% endblock %}
+
+{% block body %}
+<h1>{{ chocolate.name }}</h1>
+<p>{{ chocolate.description }}</p>
+<p>Prix : {{ chocolate.price }} €</p>
+<img src="{{ chocolate.image }}" alt="{{ chocolate.name }}" width="200">
+
+<a href="{{ path('chocolate_edit', {id: chocolate.id}) }}">Modifier</a>
+
+<form action="{{ path('chocolate_delete', {id: chocolate.id}) }}" method="post" onsubmit="return confirm('Supprimer ce chocolat ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chocolate.id) }}">
+    <button type="submit">Supprimer</button>
+</form>
+
+<a href="{{ path('chocolate_index') }}">Retour à la liste</a>
+{% endblock %}
